@@ -27,9 +27,9 @@ const getUser = (userId) => {
 
 const io = new Server(server, {
   cors: {
-    // origin: "http://localhost:3000",
+    origin: "http://localhost:3000",
     // origin: "https://criptomilhas.com.br",
-    origin: "*",
+    // origin: "*",
     methods: ["GET", "POST"],
   },
 });
@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
         text,
         attachedImage,
       });
-      console.log("all users send message", users);
+      console.log("all user send message", users);
     }
   );
 
