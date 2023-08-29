@@ -3,9 +3,7 @@ const app = express();
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
-app.use(cors({
-  origin: 'http://localhost:3000/'
-}));
+app.use(cors());
 
 const server = http.createServer(app);
 
@@ -30,11 +28,12 @@ const getUser = (userId) => {
 const io = new Server(server, {
   cors: {
     origin: "*",
+    // origin: "http//localhost:3000",
     // origin: "https://criptomilhas.com.br",
     // origin: "*",
-    methods: ["GET", "POST"],
-    credentials: true, // Define se as credenciais (cookies, autenticação HTTP) podem ser enviadas com a solicitação
-    allowedHeaders: ["X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"], // Cabeçalhos permitidos
+    // methods: ["GET", "POST"],
+    // credentials: true, // Define se as credenciais (cookies, autenticação HTTP) podem ser enviadas com a solicitação
+    // allowedHeaders: ["X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"], // Cabeçalhos permitidos
   },
 });
 
