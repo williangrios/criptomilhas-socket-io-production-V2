@@ -27,7 +27,7 @@ const getUser = (userId) => {
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
     // origin: "https://criptomilhas.com.br",
     // origin: "*",
     methods: ["GET", "POST"],
