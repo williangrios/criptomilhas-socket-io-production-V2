@@ -4,7 +4,7 @@ const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
 app.use(cors({
-  origin: 'https://criptomilhas.com.br/'
+  origin: 'http://localhost:3000/'
 }));
 
 const server = http.createServer(app);
@@ -69,5 +69,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(8900, () => {
-  console.log("SERVER RUNNING");
+  console.log("SERVER RUNNING", server.address());
 });
