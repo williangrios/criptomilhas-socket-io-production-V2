@@ -28,10 +28,10 @@ const getUser = (userId) => {
 const io = new Server(server, {
   cors: {
     // origin: "*",
-    // origin: "http//localhost:3000",
-    origin: "https://criptomilhas.com.br",
-    // origin: "*",
-    // methods: ["GET", "POST"],
+    // origin: "http://localhost:3000",
+    // origin: "https://criptomilhas.com.br",
+    origin: "*",
+    methods: ["GET", "POST"],
     // credentials: true, // Define se as credenciais (cookies, autenticação HTTP) podem ser enviadas com a solicitação
     // allowedHeaders: ["X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"], // Cabeçalhos permitidos
   },
