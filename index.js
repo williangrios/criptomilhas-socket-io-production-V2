@@ -31,7 +31,7 @@ const io = new Server(server, {
     // origin: "http://localhost:3000",
     // origin: "https://criptomilhas.com.br",
     origin: "*",
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
     credentials: true
   },
 });
