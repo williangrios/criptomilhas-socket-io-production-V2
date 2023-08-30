@@ -13,10 +13,9 @@ const router = require('./router');
 app.use(router);
 
 const io = socketio(server,   {cors: {
-  origin: "*", // Substitua pelo domínio onde seu código está sendo executado
+  origin: "https://criptomilhas.com.br", // Substitua pelo domínio onde seu código está sendo executado
   methods: ["GET", "POST"]
 }})
-
 
 // const io = new Server(server);
 
@@ -40,7 +39,6 @@ io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
   socket.on("addUser", (userId) => {
     addUser(userId, socket.id);
-    console.log("all users addUser", users);
     io.emit("getUsers", users);
   });
 
@@ -55,7 +53,6 @@ io.on("connection", (socket) => {
         text,
         attachedImage,
       });
-      console.log("all user send message", users);
     }
   );
 
