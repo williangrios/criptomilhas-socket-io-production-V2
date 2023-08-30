@@ -3,7 +3,7 @@ const app = express();
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
-app.use(cors({origin: '*'}));
+app.use(cors({ origin: "*" }));
 
 const server = http.createServer(app);
 
@@ -28,15 +28,32 @@ const getUser = (userId) => {
 const io = new Server(server, {
   cors: {
     // origin: "*",
-    // origin: "http://localhost:3000",
+    origin: "http://localhost:3000",
     // origin: "https://criptomilhas.com.br",
-    origin: "*",
-    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
-    credentials: true
+    // origin: "*",
+    methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
 io.on("connection", (socket) => {
+  // exemplo de como enviar credenciai
+  // https://socket.io/docs/v4/middlewares/
+  // middleware
+  // socket.use(([event, ...args], next) => {
+  //   if (isUnauthorized(event)) {
+  //     return next(new Error("unauthorized event"));
+  //   }
+  //   next();
+  // });
+  // io.use((socket, next) => {
+  //   if (isValid(socket.request)) {
+  //     next();
+  //   } else {
+  //     next(new Error("invalid"));
+  //   }
+  // });
+
   console.log(`User Connected: ${socket.id}`);
 
   socket.on("addUser", (userId) => {
@@ -60,15 +77,14 @@ io.on("connection", (socket) => {
     }
   );
 
-  
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
   });
 });
 
-app.get("/", (req, res) => {
-  res.send("Server is running............");
-});
+// app.get("/", (req, res) => { 
+//   res.send("Server is running............");
+// });
 
 server.listen(8900, () => {
   console.log("SERVER RUNNING", server.address());
