@@ -2,8 +2,11 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const cors = require("cors");
-const { Server } = require("socket.io");
-app.use(cors({ origin: "*" }));
+const socketio = require("socket.io");
+const router = require('./router');
+// const { Server } = require("socket.io");
+app.use(cors());
+app.use(router);
 
 const server = http.createServer(app);
 
@@ -25,16 +28,8 @@ const getUser = (userId) => {
   return users.find((user) => user.userId === userId);
 };
 
-const io = new Server(server, {
-  cors: {
-    // origin: "*",
-    // origin: "http://localhost:3000",
-    // origin: "https://criptomilhas.com.br",
-    origin: "*",
-    methods: ["GET", "POST"],
-    credentials: true,
-  },
-});
+// const io = new Server(server);
+const io = socketio(server);
 
 io.on("connection", (socket) => {
   // exemplo de como enviar credenciai
@@ -86,6 +81,6 @@ io.on("connection", (socket) => {
 //   res.send("Server is running............");
 // });
 
-server.listen(443, () => {
+server.listen(8900, () => {
   console.log("SERVER RUNNING", server.address());
 });
