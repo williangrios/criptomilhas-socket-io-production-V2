@@ -1,35 +1,24 @@
+const { addUser, removeUser, getUser, users} = require('./users.js')
 const express = require("express");
-const app = express();
+const socketio = require("socket.io");
 const http = require("http");
 const cors = require("cors");
-const socketio = require("socket.io");
-const router = require('./router');
-// const { Server } = require("socket.io");
+
+const PORT = process.env.PORT || 8900
+
+const app = express();
+const server = http.createServer(app);
 app.use(cors());
+const router = require('./router');
 app.use(router);
 
-const server = http.createServer(app);
+const io = socketio(server,   {cors: {
+  origin: "*", // Substitua pelo domínio onde seu código está sendo executado
+  methods: ["GET", "POST"]
+}})
 
-let users = [];
-
-const addUser = (userId, socketId) => {
-  if (!users.some((user) => user.userId === userId)) {
-    users.push({ userId, socketId });
-  } else {
-    console.log("nao inseriu pois já estava dentro");
-  }
-};
-
-const removeUser = (socketId) => {
-  users = users.filter((user) => user.socketId !== socketId);
-};
-
-const getUser = (userId) => {
-  return users.find((user) => user.userId === userId);
-};
 
 // const io = new Server(server);
-const io = socketio(server);
 
 io.on("connection", (socket) => {
   // exemplo de como enviar credenciai
@@ -48,9 +37,7 @@ io.on("connection", (socket) => {
   //     next(new Error("invalid"));
   //   }
   // });
-
   console.log(`User Connected: ${socket.id}`);
-
   socket.on("addUser", (userId) => {
     addUser(userId, socket.id);
     console.log("all users addUser", users);
@@ -73,14 +60,11 @@ io.on("connection", (socket) => {
   );
 
   socket.on("disconnect", () => {
-    console.log("User Disconnected", socket.id);
+    console.log("User Disconnected", socket.id)
+    removeUser(socket.id)
   });
 });
 
-// app.get("/", (req, res) => { 
-//   res.send("Server is running............");
-// });
-
-server.listen(8900, () => {
-  console.log("SERVER RUNNING", server.address());
+server.listen(PORT, () => {
+  console.log("SERVER RUNNING:", server.address(), ' PORT:', PORT);
 });
