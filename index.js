@@ -1,4 +1,4 @@
-const { addUser, removeUser, getUser, users} = require('./users.js')
+const { addUser, removeUserBySocketId, getUser, users} = require('./users.js')
 const express = require("express");
 const socketio = require("socket.io");
 const http = require("http");
@@ -14,6 +14,7 @@ app.use(router);
 
 const io = socketio(server,   {cors: {
   origin: "https://criptomilhas.com.br", // Substitua pelo domínio onde seu código está sendo executado
+  // origin: "*", // Substitua pelo domínio onde seu código está sendo executado
   methods: ["GET", "POST"]
 }})
 
@@ -56,9 +57,10 @@ io.on("connection", (socket) => {
     }
   );
 
-  socket.on("disconnect", () => {
+  socket.on("disc", () => {
     console.log("User Disconnected", socket.id)
-    removeUser(socket.id)
+    io.emit("getUsers", users);
+    removeUserBySocketId(socket.id)
   });
 });
 
