@@ -37,7 +37,6 @@ io.on("connection", (socket) => {
   //     next(new Error("invalid"));
   //   }
   // });
-  console.log(`User Connected: ${socket.id}`);
   socket.on("addUser", (userId) => {
     addUser(userId, socket.id);
     io.emit("getUsers", users);
@@ -45,22 +44,24 @@ io.on("connection", (socket) => {
 
   socket.on(
     "sendMessage",
-    ({ conversationId, senderId, receiverId, text, attachedImage }) => {
+    ({ conversationId, senderId, receiverId, text, attachedImage, personalizedProposalId }) => {
       const user = getUser(receiverId);
+      if (!user ) {
+        return
+      }
       io.to(user?.socketId).emit("getMessage", {
-        // ?
         conversationId,
         senderId,
         text,
         attachedImage,
+        personalizedProposalId
       });
     }
   );
 
-  socket.on("disc", () => {
-    console.log("User Disconnected", socket.id)
-    io.emit("getUsers", users);
+  socket.on("disconnect", () => {
     removeUserBySocketId(socket.id)
+    io.emit("getUsers", users);
   });
 });
 
