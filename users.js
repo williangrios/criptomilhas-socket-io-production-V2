@@ -1,26 +1,23 @@
 let users = [];
 
 const addUser = (userId, socketId) => {
-  if (!userId){
-    console.log('não inseriu pois veio sem id/wallet')
-    return
-  }
+  if (!userId) return
   removeUserByUserId(userId)
   users.push({ userId, socketId });
-  console.log("todos", users);
+  // console.log('adicionado add user', users);
 };
 
 const removeUserBySocketId = (socketId) => {
   users = users.filter((user) => user.socketId !== socketId);
-  console.log("todos", users);
+  // console.log('remove user remove user', users);
 };
 
 const removeUserByUserId = (userId) => {
   users = users.filter((user) => user.userId !== userId);
-  console.log("todos", users);
 };
 
 const getUser = (userId) => {
+  // console.log('todos get user', users);
   return users.find((user) => user.userId === userId);
 };
 
