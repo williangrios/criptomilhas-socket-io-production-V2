@@ -13,8 +13,8 @@ const router = require('./router');
 app.use(router);
 
 const io = socketio(server,   {cors: {
-  origin: "https://criptomilhas.com.br", // Substitua pelo domínio onde seu código está sendo executado
-  // origin: "*", // Substitua pelo domínio onde seu código está sendo executado
+  // origin: "https://criptomilhas.com.br", // Substitua pelo domínio onde seu código está sendo executado
+  origin: "*", // Substitua pelo domínio onde seu código está sendo executado
   methods: ["GET", "POST"]
 }})
 
