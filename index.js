@@ -8,7 +8,11 @@ const PORT = process.env.PORT || 8900
 
 const app = express();
 const server = http.createServer(app);
-app.use(cors());
+app.use(cors({
+  origin: 'https://www.criptomilhas.com.br',
+  methods: ['GET', 'POST'],
+  optionsSuccessStatus: 204,
+}));
 const router = require('./router');
 app.use(router);
 
