@@ -2,7 +2,7 @@ const { addUser, removeUserBySocketId, getUser, users} = require('./users.js')
 const express = require("express");
 const socketio = require("socket.io");
 const http = require("http");
-const cors = require("cors");
+// const cors = require("cors");
 
 const PORT = process.env.PORT || 8900
 
@@ -11,9 +11,16 @@ const server = http.createServer(app);
 const router = require('./router');
 app.use(router);
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://www.criptomilhas.com.br');
+  res.header('Access-Control-Allow-Methods', 'GET, POST');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
 const io = socketio(server,   {cors: {
-  // origin: "https://criptomilhas.com.br", // Substitua pelo domínio onde seu código está sendo executado 
-  origin: "*", // Substitua pelo domínio onde seu código está sendo executado...
+  origin: "https://www.criptomilhas.com.br", // Substitua pelo domínio onde seu código está sendo executado 
+  // origin: "*", // Substitua pelo domínio onde seu código está sendo executado...
   methods: ["GET", "POST"]
 }})
 
