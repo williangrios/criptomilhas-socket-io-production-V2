@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 const io = socketio(server,   {cors: {
   origin: "https://www.criptomilhas.com.br", // Substitua pelo domínio onde seu código está sendo executado 
   // origin: "*", // Substitua pelo domínio onde seu código está sendo executado...
-  methods: ["GET", "POST"]
+  methods: ["GET", "POST", "OPTIONS"]
 }})
 
 // const io = new Server(server);
