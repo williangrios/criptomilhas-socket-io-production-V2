@@ -5,6 +5,7 @@ const cors = require("cors");
 router.use(cors({
   origin: 'https://www.criptomilhas.com.br',
   methods: ['GET', 'POST', "OPTIONS"],
+  allowedHeaders: ['Content-Type'],
   optionsSuccessStatus: 204,
 }))
 router.get("/", (req, res) => {
