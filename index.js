@@ -56,5 +56,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(PORT, () => {
-  console.log("SERVER RUNNING on------->", server.address(), ' PORT:', PORT);
+  console.log("SERVER RUNNING on--->", server.address(), ' PORT:', PORT);
 });
